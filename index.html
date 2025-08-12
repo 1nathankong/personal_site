@@ -674,7 +674,7 @@
         // Animation loop
         function animate() {
             ctx.clearRect(0, 0, width, height);
-            ctx.fillStyle = 'rgba(0, 0, 0, 0.95)';
+            ctx.fillStyle = 'rgba(0, 0, 0, 0.1)';
             ctx.fillRect(0, 0, width, height);
 
             // Update and draw particles
@@ -686,6 +686,11 @@
                     particles[index] = new Particle();
                 }
             });
+
+            // Ensure minimum particle count
+            while (particles.length < 60) {
+                particles.push(new Particle());
+            }
 
             drawConnections();
 
@@ -713,12 +718,12 @@
             cursor.style.top = e.clientY - 10 + 'px';
             
             // Add particles at mouse position
-            if (Math.random() < 0.1) {
+            if (Math.random() < 0.3) {
                 particles.push(new Particle(e.clientX, e.clientY));
             }
 
             // Create lightning to nearby particles
-            if (Math.random() < 0.05) {
+            if (Math.random() < 0.15) {
                 const nearbyParticle = particles.find(particle => {
                     const distance = Math.sqrt((particle.x - e.clientX) ** 2 + (particle.y - e.clientY) ** 2);
                     return distance < 200;
@@ -863,7 +868,7 @@
 
         // Random ambient lightning
         setInterval(() => {
-            if (Math.random() < 0.3 && particles.length > 10) {
+            if (Math.random() < 0.7 && particles.length > 5) {
                 const particle1 = particles[Math.floor(Math.random() * particles.length)];
                 const particle2 = particles[Math.floor(Math.random() * particles.length)];
                 

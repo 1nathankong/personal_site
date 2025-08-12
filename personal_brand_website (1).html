@@ -1,0 +1,874 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Your Name - Lightning Portfolio</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: #000000;
+            color: #ffffff;
+            overflow-x: hidden;
+            cursor: none;
+        }
+
+        /* Custom Lightning Cursor */
+        .cursor {
+            position: fixed;
+            width: 20px;
+            height: 20px;
+            background: radial-gradient(circle, #ffffff 0%, transparent 70%);
+            border-radius: 50%;
+            pointer-events: none;
+            z-index: 9999;
+            mix-blend-mode: screen;
+            transition: transform 0.1s ease;
+            box-shadow: 0 0 20px #ffffff;
+        }
+
+        /* Interactive Canvas Background */
+        #canvas {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+        }
+
+        /* Navigation */
+        nav {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            padding: 2rem;
+            z-index: 1000;
+            background: rgba(0, 0, 0, 0.9);
+            backdrop-filter: blur(20px);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .nav-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 1.8rem;
+            font-weight: 800;
+            color: #ffffff;
+            text-decoration: none;
+            text-shadow: 0 0 20px #ffffff;
+            position: relative;
+        }
+
+        .logo::before {
+            content: '⚡';
+            position: absolute;
+            left: -30px;
+            animation: lightning-flicker 2s infinite;
+        }
+
+        @keyframes lightning-flicker {
+            0%, 90%, 100% { opacity: 1; text-shadow: 0 0 20px #ffffff; }
+            5%, 15%, 25%, 35%, 45% { opacity: 0.3; text-shadow: none; }
+        }
+
+        .nav-links {
+            display: flex;
+            list-style: none;
+            gap: 3rem;
+        }
+
+        .nav-links a {
+            color: #cccccc;
+            text-decoration: none;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .nav-links a:hover {
+            color: #ffffff;
+            text-shadow: 0 0 10px #ffffff;
+        }
+
+        /* Hero Section */
+        .hero {
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            position: relative;
+        }
+
+        .hero-content {
+            z-index: 10;
+            animation: fadeInUp 2s ease-out;
+        }
+
+        .hero h1 {
+            font-size: 5rem;
+            font-weight: 900;
+            margin-bottom: 1rem;
+            color: #ffffff;
+            text-shadow: 0 0 30px #ffffff, 0 0 60px rgba(255, 255, 255, 0.5);
+            animation: lightning-glow 4s ease-in-out infinite alternate;
+        }
+
+        @keyframes lightning-glow {
+            0% { 
+                text-shadow: 0 0 30px #ffffff, 0 0 60px rgba(255, 255, 255, 0.5);
+            }
+            25% { 
+                text-shadow: 0 0 50px #ffffff, 0 0 100px rgba(255, 255, 255, 0.8), 0 0 150px rgba(255, 255, 255, 0.3);
+            }
+            50% { 
+                text-shadow: 0 0 30px #ffffff, 0 0 60px rgba(255, 255, 255, 0.5);
+            }
+            75% { 
+                text-shadow: 0 0 40px #ffffff, 0 0 80px rgba(255, 255, 255, 0.7);
+            }
+            100% { 
+                text-shadow: 0 0 30px #ffffff, 0 0 60px rgba(255, 255, 255, 0.5);
+            }
+        }
+
+        .hero .tagline {
+            font-size: 1.8rem;
+            margin-bottom: 2rem;
+            color: #aaaaaa;
+            font-weight: 300;
+        }
+
+        .interaction-hint {
+            position: absolute;
+            bottom: 10%;
+            left: 50%;
+            transform: translateX(-50%);
+            color: #ffffff;
+            font-size: 1.1rem;
+            animation: electric-pulse 2s infinite;
+        }
+
+        @keyframes electric-pulse {
+            0%, 100% { opacity: 0.6; transform: translateX(-50%) translateY(0); }
+            50% { opacity: 1; transform: translateX(-50%) translateY(-10px); text-shadow: 0 0 20px #ffffff; }
+        }
+
+        /* Interactive Elements */
+        .section {
+            min-height: 100vh;
+            padding: 5rem 2rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+        }
+
+        .content-box {
+            max-width: 1000px;
+            background: rgba(255, 255, 255, 0.03);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 20px;
+            padding: 3rem;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .content-box::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.1), transparent);
+            transition: left 0.8s;
+        }
+
+        .content-box:hover::before {
+            left: 100%;
+        }
+
+        .content-box::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 2px;
+            background: linear-gradient(90deg, transparent, #ffffff, transparent);
+            animation: electric-scan 3s infinite;
+        }
+
+        @keyframes electric-scan {
+            0%, 100% { opacity: 0; }
+            50% { opacity: 1; }
+        }
+
+        .content-box:hover {
+            border-color: rgba(255, 255, 255, 0.5);
+            box-shadow: 0 20px 50px rgba(255, 255, 255, 0.1);
+            transform: translateY(-10px);
+        }
+
+        .section-title {
+            font-size: 3rem;
+            font-weight: 700;
+            margin-bottom: 2rem;
+            color: #ffffff;
+            text-align: center;
+            text-shadow: 0 0 20px #ffffff;
+        }
+
+        /* Projects Grid */
+        .projects-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+
+        .project-card {
+            background: rgba(255, 255, 255, 0.02);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            border-radius: 15px;
+            padding: 2rem;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .project-card::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background: linear-gradient(90deg, #ffffff, #aaaaaa, #ffffff);
+            transform: scaleX(0);
+            transition: transform 0.3s ease;
+        }
+
+        .project-card:hover::after {
+            transform: scaleX(1);
+        }
+
+        .project-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 40px rgba(255, 255, 255, 0.1);
+            border-color: #ffffff;
+        }
+
+        .project-title {
+            color: #ffffff;
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .project-description {
+            color: #cccccc;
+            margin-bottom: 1.5rem;
+        }
+
+        .tech-tags {
+            display: flex;
+            gap: 0.5rem;
+            flex-wrap: wrap;
+        }
+
+        .tech-tag {
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            color: #ffffff;
+            padding: 0.3rem 0.8rem;
+            border-radius: 15px;
+            font-size: 0.8rem;
+            transition: all 0.3s ease;
+        }
+
+        .tech-tag:hover {
+            background: #ffffff;
+            color: #000000;
+            box-shadow: 0 0 20px rgba(255, 255, 255, 0.5);
+        }
+
+        /* Contact Section */
+        .contact-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+
+        .contact-item {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            border-radius: 15px;
+            padding: 2rem;
+            text-align: center;
+            text-decoration: none;
+            color: #ffffff;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .contact-item:hover {
+            background: rgba(255, 255, 255, 0.1);
+            transform: scale(1.05);
+            box-shadow: 0 0 30px rgba(255, 255, 255, 0.2);
+            border-color: #ffffff;
+        }
+
+        .contact-icon {
+            font-size: 2rem;
+            margin-bottom: 1rem;
+            display: block;
+        }
+
+        /* Skill tags in about section */
+        .skill-tag {
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            color: #ffffff;
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            transition: all 0.3s ease;
+        }
+
+        .skill-tag:hover {
+            background: #ffffff;
+            color: #000000;
+            box-shadow: 0 0 20px rgba(255, 255, 255, 0.5);
+        }
+
+        /* Animations */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(50px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.5; }
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .hero h1 {
+                font-size: 3rem;
+            }
+            
+            .nav-links {
+                display: none;
+            }
+            
+            .content-box {
+                margin: 1rem;
+                padding: 2rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Custom Lightning Cursor -->
+    <div class="cursor"></div>
+
+    <!-- Interactive Canvas -->
+    <canvas id="canvas"></canvas>
+
+    <!-- Navigation -->
+    <nav>
+        <div class="nav-container">
+            <a href="#" class="logo">YourName</a>
+            <ul class="nav-links">
+                <li><a href="#about">About</a></li>
+                <li><a href="#projects">Projects</a></li>
+                <li><a href="#contact">Connect</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="hero-content">
+            <h1>Creative Developer</h1>
+            <p class="tagline">Building digital experiences that inspire</p>
+        </div>
+        <div class="interaction-hint">
+            Move your mouse to generate lightning ⚡
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section id="about" class="section">
+        <div class="content-box">
+            <h2 class="section-title">About Me</h2>
+            <p style="font-size: 1.2rem; line-height: 1.8; color: #dddddd; text-align: center;">
+                I'm a passionate developer who harnesses the power of code to create electrifying digital experiences. 
+                My work strikes with precision in the darkness, illuminating paths through complex problems 
+                with elegant, lightning-fast solutions.
+            </p>
+            <div style="display: flex; justify-content: center; gap: 1rem; margin-top: 2rem; flex-wrap: wrap;">
+                <span class="skill-tag">JavaScript</span>
+                <span class="skill-tag">React</span>
+                <span class="skill-tag">Three.js</span>
+                <span class="skill-tag">Canvas API</span>
+                <span class="skill-tag">WebGL</span>
+            </div>
+        </div>
+    </section>
+
+    <!-- Projects Section -->
+    <section id="projects" class="section">
+        <div class="content-box">
+            <h2 class="section-title">Featured Work</h2>
+            <div class="projects-grid">
+                <div class="project-card">
+                    <h3 class="project-title">Interactive Dashboard</h3>
+                    <p class="project-description">
+                        Real-time data visualization with lightning-fast performance and stark, 
+                        powerful design that cuts through information noise.
+                    </p>
+                    <div class="tech-tags">
+                        <span class="tech-tag">D3.js</span>
+                        <span class="tech-tag">React</span>
+                    </div>
+                </div>
+                
+                <div class="project-card">
+                    <h3 class="project-title">3D Portfolio Site</h3>
+                    <p class="project-description">
+                        Immersive monochromatic experience where projects emerge from digital darkness 
+                        with interactive lightning effects.
+                    </p>
+                    <div class="tech-tags">
+                        <span class="tech-tag">Three.js</span>
+                        <span class="tech-tag">WebGL</span>
+                    </div>
+                </div>
+
+                <div class="project-card">
+                    <h3 class="project-title">Generative Art Tool</h3>
+                    <p class="project-description">
+                        Creative coding platform for generating unique algorithmic artwork 
+                        in pure black and white minimalist aesthetics.
+                    </p>
+                    <div class="tech-tags">
+                        <span class="tech-tag">Canvas</span>
+                        <span class="tech-tag">JavaScript</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section id="contact" class="section">
+        <div class="content-box">
+            <h2 class="section-title">Let's Create Together</h2>
+            <p style="font-size: 1.2rem; text-align: center; color: #dddddd; margin-bottom: 3rem;">
+                Ready to harness digital lightning? Let's connect and build something that strikes 
+                with precision and illuminates the void.
+            </p>
+            <div class="contact-grid">
+                <a href="https://github.com/yourusername" class="contact-item">
+                    <span class="contact-icon">⚡</span>
+                    <div>GitHub</div>
+                    <small style="color: #aaa;">Check out my code</small>
+                </a>
+                <a href="https://linkedin.com/in/yourusername" class="contact-item">
+                    <span class="contact-icon">🌩️</span>
+                    <div>LinkedIn</div>
+                    <small style="color: #aaa;">Professional network</small>
+                </a>
+                <a href="mailto:your.email@example.com" class="contact-item">
+                    <span class="contact-icon">📡</span>
+                    <div>Email</div>
+                    <small style="color: #aaa;">Direct contact</small>
+                </a>
+                <a href="#" class="contact-item" id="downloadCV">
+                    <span class="contact-icon">📄</span>
+                    <div>Resume</div>
+                    <small style="color: #aaa;">Download CV</small>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <script>
+        // Canvas setup for interactive lightning background
+        const canvas = document.getElementById('canvas');
+        const ctx = canvas.getContext('2d');
+        let width, height;
+        let mouse = { x: 0, y: 0 };
+        let particles = [];
+        let lightningBolts = [];
+
+        function resizeCanvas() {
+            width = canvas.width = window.innerWidth;
+            height = canvas.height = window.innerHeight;
+        }
+
+        // Lightning bolt class
+        class LightningBolt {
+            constructor(startX, startY, endX, endY) {
+                this.startX = startX;
+                this.startY = startY;
+                this.endX = endX;
+                this.endY = endY;
+                this.points = this.generateBolt();
+                this.life = 20;
+                this.maxLife = 20;
+                this.thickness = Math.random() * 2 + 1;
+            }
+
+            generateBolt() {
+                const points = [{x: this.startX, y: this.startY}];
+                const segments = Math.floor(Math.random() * 6 + 4);
+                
+                for (let i = 1; i < segments; i++) {
+                    const progress = i / segments;
+                    const x = this.startX + (this.endX - this.startX) * progress + (Math.random() - 0.5) * 40;
+                    const y = this.startY + (this.endY - this.startY) * progress + (Math.random() - 0.5) * 40;
+                    points.push({x, y});
+                }
+                
+                points.push({x: this.endX, y: this.endY});
+                return points;
+            }
+
+            update() {
+                this.life--;
+            }
+
+            draw() {
+                const alpha = this.life / this.maxLife;
+                ctx.save();
+                ctx.globalAlpha = alpha;
+                ctx.strokeStyle = '#ffffff';
+                ctx.lineWidth = this.thickness;
+                ctx.shadowBlur = 15;
+                ctx.shadowColor = '#ffffff';
+                
+                ctx.beginPath();
+                ctx.moveTo(this.points[0].x, this.points[0].y);
+                
+                for (let i = 1; i < this.points.length; i++) {
+                    ctx.lineTo(this.points[i].x, this.points[i].y);
+                }
+                
+                ctx.stroke();
+                ctx.restore();
+            }
+        }
+
+        // White particle system
+        class Particle {
+            constructor(x, y) {
+                this.x = x || Math.random() * width;
+                this.y = y || Math.random() * height;
+                this.vx = (Math.random() - 0.5) * 0.5;
+                this.vy = (Math.random() - 0.5) * 0.5;
+                this.life = Math.random() * 100 + 100;
+                this.maxLife = this.life;
+            }
+
+            update() {
+                this.x += this.vx;
+                this.y += this.vy;
+                this.life--;
+
+                // Mouse attraction
+                const dx = mouse.x - this.x;
+                const dy = mouse.y - this.y;
+                const distance = Math.sqrt(dx * dx + dy * dy);
+                
+                if (distance < 150) {
+                    const force = (150 - distance) / 150;
+                    this.vx += (dx / distance) * force * 0.01;
+                    this.vy += (dy / distance) * force * 0.01;
+                }
+
+                // Boundaries
+                if (this.x < 0 || this.x > width) this.vx *= -1;
+                if (this.y < 0 || this.y > height) this.vy *= -1;
+                
+                this.x = Math.max(0, Math.min(width, this.x));
+                this.y = Math.max(0, Math.min(height, this.y));
+            }
+
+            draw() {
+                const alpha = this.life / this.maxLife;
+                ctx.save();
+                ctx.globalAlpha = alpha * 0.8;
+                ctx.beginPath();
+                ctx.arc(this.x, this.y, 2, 0, Math.PI * 2);
+                ctx.fillStyle = '#ffffff';
+                ctx.fill();
+                ctx.shadowBlur = 10;
+                ctx.shadowColor = '#ffffff';
+                ctx.restore();
+            }
+        }
+
+        // Initialize particles
+        function initParticles() {
+            particles = [];
+            for (let i = 0; i < 80; i++) {
+                particles.push(new Particle());
+            }
+        }
+
+        // Draw white connections between nearby particles
+        function drawConnections() {
+            ctx.save();
+            for (let i = 0; i < particles.length; i++) {
+                for (let j = i + 1; j < particles.length; j++) {
+                    const dx = particles[i].x - particles[j].x;
+                    const dy = particles[i].y - particles[j].y;
+                    const distance = Math.sqrt(dx * dx + dy * dy);
+                    
+                    if (distance < 120) {
+                        const alpha = (120 - distance) / 120;
+                        ctx.globalAlpha = alpha * 0.3;
+                        ctx.beginPath();
+                        ctx.moveTo(particles[i].x, particles[i].y);
+                        ctx.lineTo(particles[j].x, particles[j].y);
+                        ctx.strokeStyle = '#ffffff';
+                        ctx.lineWidth = 0.5;
+                        ctx.stroke();
+                    }
+                }
+            }
+            ctx.restore();
+        }
+
+        // Animation loop
+        function animate() {
+            ctx.fillStyle = 'rgba(0, 0, 0, 0.05)';
+            ctx.fillRect(0, 0, width, height);
+
+            // Update and draw particles
+            particles.forEach((particle, index) => {
+                particle.update();
+                particle.draw();
+                
+                if (particle.life <= 0) {
+                    particles[index] = new Particle();
+                }
+            });
+
+            drawConnections();
+
+            // Update and draw lightning bolts
+            lightningBolts.forEach((bolt, index) => {
+                bolt.update();
+                bolt.draw();
+                
+                if (bolt.life <= 0) {
+                    lightningBolts.splice(index, 1);
+                }
+            });
+
+            requestAnimationFrame(animate);
+        }
+
+        // Mouse tracking with lightning generation
+        window.addEventListener('mousemove', (e) => {
+            mouse.x = e.clientX;
+            mouse.y = e.clientY;
+            
+            // Update custom cursor
+            const cursor = document.querySelector('.cursor');
+            cursor.style.left = e.clientX - 10 + 'px';
+            cursor.style.top = e.clientY - 10 + 'px';
+            
+            // Add particles at mouse position
+            if (Math.random() < 0.1) {
+                particles.push(new Particle(e.clientX, e.clientY));
+            }
+
+            // Create lightning to nearby particles
+            if (Math.random() < 0.05) {
+                const nearbyParticle = particles.find(particle => {
+                    const distance = Math.sqrt((particle.x - e.clientX) ** 2 + (particle.y - e.clientY) ** 2);
+                    return distance < 200;
+                });
+                
+                if (nearbyParticle) {
+                    lightningBolts.push(new LightningBolt(e.clientX, e.clientY, nearbyParticle.x, nearbyParticle.y));
+                }
+            }
+        });
+
+        // Click to create lightning burst
+        window.addEventListener('click', (e) => {
+            // Create particle burst
+            for (let i = 0; i < 10; i++) {
+                const angle = (Math.PI * 2 * i) / 10;
+                const particle = new Particle(e.clientX, e.clientY);
+                particle.vx = Math.cos(angle) * 2;
+                particle.vy = Math.sin(angle) * 2;
+                particles.push(particle);
+            }
+
+            // Create lightning bolts
+            for (let i = 0; i < 6; i++) {
+                const angle = (Math.PI * 2 * i) / 6;
+                const distance = Math.random() * 150 + 50;
+                const endX = e.clientX + Math.cos(angle) * distance;
+                const endY = e.clientY + Math.sin(angle) * distance;
+                
+                lightningBolts.push(new LightningBolt(e.clientX, e.clientY, endX, endY));
+            }
+        });
+
+        // Smooth scrolling
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+
+        // Scroll effects
+        window.addEventListener('scroll', () => {
+            const scrolled = window.pageYOffset;
+            const sections = document.querySelectorAll('.content-box');
+            
+            sections.forEach((section, index) => {
+                const rect = section.getBoundingClientRect();
+                if (rect.top < window.innerHeight && rect.bottom > 0) {
+                    section.style.transform = `translateY(${scrolled * 0.1}px)`;
+                }
+            });
+
+            // Create lightning on scroll
+            if (Math.random() < 0.02) {
+                const randomParticle1 = particles[Math.floor(Math.random() * particles.length)];
+                const randomParticle2 = particles[Math.floor(Math.random() * particles.length)];
+                
+                if (randomParticle1 && randomParticle2) {
+                    lightningBolts.push(new LightningBolt(randomParticle1.x, randomParticle1.y, randomParticle2.x, randomParticle2.y));
+                }
+            }
+        });
+
+        // Interactive effects for project cards
+        document.querySelectorAll('.project-card').forEach(card => {
+            card.addEventListener('mouseenter', () => {
+                const rect = card.getBoundingClientRect();
+                
+                // Create lightning around the card
+                for (let i = 0; i < 3; i++) {
+                    const startX = rect.left + Math.random() * rect.width;
+                    const startY = rect.top + Math.random() * rect.height;
+                    const endX = rect.left + Math.random() * rect.width;
+                    const endY = rect.top + Math.random() * rect.height;
+                    
+                    lightningBolts.push(new LightningBolt(startX, startY, endX, endY));
+                }
+
+                // Create particles around the card
+                for (let i = 0; i < 5; i++) {
+                    const particle = new Particle(
+                        rect.left + Math.random() * rect.width,
+                        rect.top + Math.random() * rect.height
+                    );
+                    particles.push(particle);
+                }
+            });
+        });
+
+        // CV download with lightning explosion
+        document.getElementById('downloadCV').addEventListener('click', (e) => {
+            e.preventDefault();
+            
+            const rect = e.target.getBoundingClientRect();
+            const centerX = rect.left + rect.width / 2;
+            const centerY = rect.top + rect.height / 2;
+            
+            // Create massive lightning explosion
+            for (let i = 0; i < 15; i++) {
+                const angle = (Math.PI * 2 * i) / 15;
+                const distance = Math.random() * 200 + 100;
+                const endX = centerX + Math.cos(angle) * distance;
+                const endY = centerY + Math.sin(angle) * distance;
+                
+                lightningBolts.push(new LightningBolt(centerX, centerY, endX, endY));
+            }
+
+            // Create particle explosion
+            for (let i = 0; i < 20; i++) {
+                const angle = (Math.PI * 2 * i) / 20;
+                const particle = new Particle(centerX, centerY);
+                particle.vx = Math.cos(angle) * 3;
+                particle.vy = Math.sin(angle) * 3;
+                particles.push(particle);
+            }
+            
+            alert('⚡ Lightning Resume downloading... Strike! ⚡');
+        });
+
+        // Logo lightning effect
+        document.querySelector('.logo').addEventListener('mouseenter', () => {
+            const logo = document.querySelector('.logo');
+            logo.style.transform = 'scale(1.1)';
+            logo.style.textShadow = '0 0 30px #ffffff';
+        });
+
+        document.querySelector('.logo').addEventListener('mouseleave', () => {
+            const logo = document.querySelector('.logo');
+            logo.style.transform = 'scale(1)';
+            logo.style.textShadow = '0 0 20px #ffffff';
+        });
+
+        // Random ambient lightning
+        setInterval(() => {
+            if (Math.random() < 0.3 && particles.length > 10) {
+                const particle1 = particles[Math.floor(Math.random() * particles.length)];
+                const particle2 = particles[Math.floor(Math.random() * particles.length)];
+                
+                const distance = Math.sqrt((particle1.x - particle2.x) ** 2 + (particle1.y - particle2.y) ** 2);
+                if (distance < 300) {
+                    lightningBolts.push(new LightningBolt(particle1.x, particle1.y, particle2.x, particle2.y));
+                }
+            }
+        }, 2000);
+
+        // Initialize everything
+        window.addEventListener('resize', resizeCanvas);
+        resizeCanvas();
+        initParticles();
+        animate();
+    </script>
+</body>
+</html>

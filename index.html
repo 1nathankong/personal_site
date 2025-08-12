@@ -61,14 +61,6 @@
             align-items: center;
         }
 
-        .logo {
-            font-size: 1.8rem;
-            font-weight: 300;
-            color: #ffffff;
-            text-decoration: none;
-            text-shadow: 0 0 15px rgba(255, 255, 255, 0.5);
-            position: relative;
-        }
 
         .logo::before {
             content: '⚡';
@@ -86,6 +78,21 @@
             display: flex;
             list-style: none;
             gap: 3rem;
+        }
+
+        .logo {
+            font-size: 1.8rem;
+            font-weight: 500;
+            color: #cccccc;
+            text-decoration: none;
+            text-shadow: none;
+            position: relative;
+            transition: all 0.3s ease;
+        }
+
+        .logo:hover {
+            color: #ffffff;
+            text-shadow: 0 0 10px #ffffff;
         }
 
         .nav-links a {

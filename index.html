@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Nathan Kong Work Portfolio</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         * {
             margin: 0;
@@ -16,7 +17,6 @@
             background: #000000;
             color: #ffffff;
             overflow-x: hidden;
-            cursor: none;
         }
 
         /* Custom Lightning Cursor */
@@ -104,7 +104,7 @@
 
         /* Hero Section */
         .hero {
-            height: 100vh;
+            height: 40vh;
             display: flex;
             align-items: center;
             justify-content: center;
@@ -118,9 +118,9 @@
         }
 
         .hero h1 {
-            font-size: 5rem;
+            font-size: 3rem;
             font-weight: 300;
-            margin-bottom: 1rem;
+            margin-bottom: 0.5rem;
             color: #ffffff;
             text-shadow: 0 0 20px rgba(255, 255, 255, 0.6);
             animation: lightning-glow 4s ease-in-out infinite alternate;
@@ -145,8 +145,8 @@
         }
 
         .hero .tagline {
-            font-size: 1.8rem;
-            margin-bottom: 2rem;
+            font-size: 1rem;
+            margin-bottom: 1rem;
             color: #aaaaaa;
             font-weight: 300;
         }
@@ -168,8 +168,8 @@
 
         /* Interactive Elements */
         .section {
-            min-height: 100vh;
-            padding: 5rem 2rem;
+            min-height: auto;
+            padding: 2rem 2rem;
             display: flex;
             align-items: center;
             justify-content: center;
@@ -182,7 +182,7 @@
             backdrop-filter: blur(20px);
             border: 1px solid rgba(255, 255, 255, 0.2);
             border-radius: 20px;
-            padding: 3rem;
+            padding: 1.5rem;
             transition: all 0.3s ease;
             position: relative;
             overflow: hidden;
@@ -226,9 +226,9 @@
         }
 
         .section-title {
-            font-size: 3rem;
+            font-size: 2rem;
             font-weight: 300;
-            margin-bottom: 2rem;
+            margin-bottom: 1rem;
             color: #ffffff;
             text-align: center;
             text-shadow: 0 0 15px rgba(255, 255, 255, 0.5);
@@ -246,7 +246,7 @@
             background: rgba(255, 255, 255, 0.02);
             border: 1px solid rgba(255, 255, 255, 0.3);
             border-radius: 15px;
-            padding: 2rem;
+            padding: 1rem;
             transition: all 0.3s ease;
             position: relative;
             overflow: hidden;
@@ -310,34 +310,25 @@
 
         /* Contact Section */
         .contact-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 2rem;
+            display: flex;
+            justify-content: center;
+            gap: 3rem;
             margin-top: 3rem;
         }
 
         .contact-item {
-            background: rgba(255, 255, 255, 0.05);
-            border: 1px solid rgba(255, 255, 255, 0.3);
-            border-radius: 15px;
-            padding: 2rem;
-            text-align: center;
             text-decoration: none;
             color: #ffffff;
             transition: all 0.3s ease;
-            position: relative;
         }
 
         .contact-item:hover {
-            background: rgba(255, 255, 255, 0.1);
-            transform: scale(1.05);
-            box-shadow: 0 0 30px rgba(255, 255, 255, 0.2);
-            border-color: #ffffff;
+            transform: scale(1.2);
+            text-shadow: 0 0 20px #ffffff;
         }
 
         .contact-icon {
-            font-size: 2rem;
-            margin-bottom: 1rem;
+            font-size: 3rem;
             display: block;
         }
 
@@ -392,22 +383,10 @@
     </style>
 </head>
 <body>
-    <!-- Custom Lightning Cursor -->
-    <div class="cursor"></div>
 
     <!-- Interactive Canvas -->
     <canvas id="canvas"></canvas>
 
-    <!-- Navigation -->
-    <nav>
-        <div class="nav-container">
-            <ul class="nav-links">
-                <li><a href="#about">About</a></li>
-                <li><a href="#projects">Projects</a></li>
-                <li><a href="#contact">Connect</a></li>
-            </ul>
-        </div>
-    </nav>
 
     <!-- Hero Section -->
     <section class="hero">
@@ -416,47 +395,30 @@
             <p class="tagline">Bridging software and hardware to create intelligent, high-impact solutions</p>
         </div>
 
-        <div class="interaction-hint">
-            Move your mouse to generate lightning
-        </div>
     </section>
 
     <!-- About Section -->
     <section id="about" class="section">
-        <div class="content-box">
+        <div>
             <h2 class="section-title">About Me</h2>
-            <p style="font-size: 1.2rem; line-height: 1.8; color: #dddddd; text-align: center;">
-                I’m a passionate developer who builds intelligent systems that transform raw data into actionable insight. My work combines the precision of engineering with the creativity of problem-solving—whether it’s optimizing AI kernels for lightning-fast inference or crafting agentic workflows that uncover strategic financial opportunities.
+            <p style="font-size: 0.9rem; line-height: 1.6; color: #dddddd; text-align: left;">
+                I build intelligent systems that transform data into insight,<br>
+                combining engineering precision with creative problem-solving—<br>
+                from optimizing AI kernels to crafting agentic workflows for strategic opportunities.
             </p>
-            <div style="display: flex; justify-content: center; gap: 1rem; margin-top: 2rem; flex-wrap: wrap;">
-                <span class="skill-tag" role="listitem">Python</span>
-                <span class="skill-tag" role="listitem">PyTorch</span>
-                <span class="skill-tag" role="listitem">Triton</span>
-                <span class="skill-tag" role="listitem">CUDA</span>
-                <span class="skill-tag" role="listitem">LLM Agents</span>
-                <span class="skill-tag" role="listitem">RAG</span>
-                <span class="skill-tag" role="listitem">BeautifulSoup</span>
-                <span class="skill-tag" role="listitem">FastAPI</span>
-                <span class="skill-tag" role="listitem">Pandas</span>
-                <span class="skill-tag" role="listitem">NumPy</span>
-                <span class="skill-tag" role="listitem">SQL</span>
-                <span class="skill-tag" role="listitem">Azure OpenAI</span>
-                <span class="skill-tag" role="listitem">Ollama</span>
-                <span class="skill-tag" role="listitem">Git &amp; Docker</span>
-            </div>
         </div>
     </section>
 
     <!-- Projects Section -->
     <section id="projects" class="section">
-    <div class="content-box">
+    <div>
         <h2 class="section-title">Featured Work</h2>
         <div class="projects-grid">
 
             <div class="project-card">
                 <h3 class="project-title">Corporate Disclosure Insight System</h3>
                 <p class="project-description">
-                    An offline, <strong>free‑to‑run</strong> workflow that retrieves SEC EDGAR 10‑K filings, converts them to clean text, and structures them into JSONL for analysis. Uses local LLM inference (e.g., Ollama) to surface investment‑relevant signals and multi‑year trends, reducing manual review by ~80%.
+                    Offline workflow retrieving SEC EDGAR 10-K filings, converting to JSONL for analysis. Uses local LLM inference to surface investment signals, reducing manual review by ~80%.
                 </p>
                 <div class="tech-tags">
                     <span class="tech-tag">Python</span>
@@ -469,7 +431,7 @@
             <div class="project-card">
                 <h3 class="project-title">Customization Query System for Real Estate Properties</h3>
                 <p class="project-description">
-                    A property ranking platform powered by a cost function–based scoring system that integrates real estate APIs, FastAPI endpoints, and statistical modeling. Evaluates ROI potential by factoring in location-based amenities, safety proxies, and pricing trends, with LLM-generated justifications for top property selections.
+                    Property ranking platform with cost function-based scoring integrating real estate APIs and statistical modeling. Evaluates ROI potential using location amenities, safety proxies, and pricing trends.
                 </p>
                 <div class="tech-tags">
                     <span class="tech-tag">Python</span>
@@ -482,7 +444,7 @@
             <div class="project-card">
                 <h3 class="project-title">Triton Kernel FlashAttention Optimization (Research)</h3>
                 <p class="project-description">
-                    Ongoing research into optimizing fused attention kernels using Triton, with a focus on persistent kernel strategies, warp specialization, and block tiling to improve throughput and memory locality. Benchmarked against FlashAttention-2 to evaluate performance gains in large-scale inference workloads.
+                    Research optimizing fused attention kernels using Triton, focusing on persistent kernel strategies, warp specialization, and block tiling. Benchmarked against FlashAttention-2 for large-scale inference performance.
                 </p>
                 <div class="tech-tags">
                     <span class="tech-tag">Triton</span>
@@ -499,24 +461,21 @@
 
     <!-- Contact Section -->
     <section id="contact" class="section">
-        <div class="content-box">
-            <h2 class="section-title">Let’s Work Together</h2>
-            <p style="font-size: 1.2rem; text-align: center; color: #dddddd; margin-bottom: 3rem;">
-                Interested in collaborating or discussing a project? Let’s connect and create solutions that deliver real impact.
+        <div>
+            <h2 class="section-title">Let's Work Together</h2>
+            <p style="font-size: 0.9rem; text-align: center; color: #dddddd; margin-bottom: 1.5rem;">
+                Interested in collaborating? Let's connect and create impactful solutions.
             </p>
 
             <div class="contact-grid">
                 <a href="https://github.com/1nathankong" class="contact-item">
-                    <div>GitHub</div>
-                    <small style="color: #aaa;">Check out my code</small>
+                    <i class="fab fa-github contact-icon"></i>
                 </a>
                 <a href="https://linkedin.com/in/nathankong999" class="contact-item">
-                    <div>LinkedIn</div>
-                    <small style="color: #aaa;">Professional network</small>
+                    <i class="fab fa-linkedin contact-icon"></i>
                 </a>
                 <a href="mailto:nak5508@psu.edu" class="contact-item">
-                    <div>Email</div>
-                    <small style="color: #aaa;">Direct contact</small>
+                    <i class="fas fa-envelope contact-icon"></i>
                 </a>
             </div>
         </div>
@@ -711,10 +670,6 @@
             mouse.x = e.clientX;
             mouse.y = e.clientY;
             
-            // Update custom cursor
-            const cursor = document.querySelector('.cursor');
-            cursor.style.left = e.clientX - 10 + 'px';
-            cursor.style.top = e.clientY - 10 + 'px';
             
             // Add particles at mouse position
             if (Math.random() < 0.3) {
@@ -852,18 +807,6 @@
             });
         }
 
-        // Logo lightning effect
-        document.querySelector('.logo').addEventListener('mouseenter', () => {
-            const logo = document.querySelector('.logo');
-            logo.style.transform = 'scale(1.1)';
-            logo.style.textShadow = '0 0 30px #ffffff';
-        });
-
-        document.querySelector('.logo').addEventListener('mouseleave', () => {
-            const logo = document.querySelector('.logo');
-            logo.style.transform = 'scale(1)';
-            logo.style.textShadow = '0 0 20px #ffffff';
-        });
 
         // Random ambient lightning
         setInterval(() => {
@@ -887,3 +830,4 @@
 </body>
 
 </html>
+

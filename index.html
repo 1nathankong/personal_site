@@ -19,29 +19,6 @@
             overflow-x: hidden;
         }
 
-        /* Custom Lightning Cursor */
-        .cursor {
-            position: fixed;
-            width: 20px;
-            height: 20px;
-            background: radial-gradient(circle, #ffffff 0%, transparent 70%);
-            border-radius: 50%;
-            pointer-events: none;
-            z-index: 9999;
-            mix-blend-mode: screen;
-            transition: transform 0.1s ease;
-            box-shadow: 0 0 20px #ffffff;
-        }
-
-        /* Interactive Canvas Background */
-        #canvas {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            z-index: -1;
-        }
 
         /* Navigation */
         nav {
@@ -62,11 +39,6 @@
         }
 
 
-
-        @keyframes lightning-flicker {
-            0%, 90%, 100% { opacity: 1; text-shadow: 0 0 20px #ffffff; }
-            5%, 15%, 25%, 35%, 45% { opacity: 0.3; text-shadow: none; }
-        }
 
         .nav-links {
             display: flex;
@@ -123,26 +95,8 @@
             margin-bottom: 0.5rem;
             color: #ffffff;
             text-shadow: 0 0 20px rgba(255, 255, 255, 0.6);
-            animation: lightning-glow 4s ease-in-out infinite alternate;
         }
 
-        @keyframes lightning-glow {
-            0% { 
-                text-shadow: 0 0 30px #ffffff, 0 0 60px rgba(255, 255, 255, 0.5);
-            }
-            25% { 
-                text-shadow: 0 0 50px #ffffff, 0 0 100px rgba(255, 255, 255, 0.8), 0 0 150px rgba(255, 255, 255, 0.3);
-            }
-            50% { 
-                text-shadow: 0 0 30px #ffffff, 0 0 60px rgba(255, 255, 255, 0.5);
-            }
-            75% { 
-                text-shadow: 0 0 40px #ffffff, 0 0 80px rgba(255, 255, 255, 0.7);
-            }
-            100% { 
-                text-shadow: 0 0 30px #ffffff, 0 0 60px rgba(255, 255, 255, 0.5);
-            }
-        }
 
         .hero .tagline {
             font-size: 1rem;
@@ -151,20 +105,6 @@
             font-weight: 300;
         }
 
-        .interaction-hint {
-            position: absolute;
-            bottom: 10%;
-            left: 50%;
-            transform: translateX(-50%);
-            color: #ffffff;
-            font-size: 1.1rem;
-            animation: electric-pulse 2s infinite;
-        }
-
-        @keyframes electric-pulse {
-            0%, 100% { opacity: 0.6; transform: translateX(-50%) translateY(0); }
-            50% { opacity: 1; transform: translateX(-50%) translateY(-10px); text-shadow: 0 0 20px #ffffff; }
-        }
 
         /* Interactive Elements */
         .section {
@@ -211,13 +151,8 @@
             right: 0;
             height: 2px;
             background: linear-gradient(90deg, transparent, #ffffff, transparent);
-            animation: electric-scan 3s infinite;
         }
 
-        @keyframes electric-scan {
-            0%, 100% { opacity: 0; }
-            50% { opacity: 1; }
-        }
 
         .content-box:hover {
             border-color: rgba(255, 255, 255, 0.5);
@@ -384,8 +319,6 @@
 </head>
 <body>
 
-    <!-- Interactive Canvas -->
-    <canvas id="canvas"></canvas>
 
 
     <!-- Hero Section -->
@@ -482,235 +415,6 @@
     </section>
 
     <script>
-        // Canvas setup for interactive lightning background
-        const canvas = document.getElementById('canvas');
-        const ctx = canvas.getContext('2d');
-        let width, height;
-        let mouse = { x: 0, y: 0 };
-        let particles = [];
-        let lightningBolts = [];
-
-        function resizeCanvas() {
-            width = canvas.width = window.innerWidth;
-            height = canvas.height = window.innerHeight;
-        }
-
-        // Lightning bolt class
-        class LightningBolt {
-            constructor(startX, startY, endX, endY) {
-                this.startX = startX;
-                this.startY = startY;
-                this.endX = endX;
-                this.endY = endY;
-                this.points = this.generateBolt();
-                this.life = 20;
-                this.maxLife = 20;
-                this.thickness = Math.random() * 2 + 1;
-            }
-
-            generateBolt() {
-                const points = [{x: this.startX, y: this.startY}];
-                const segments = Math.floor(Math.random() * 6 + 4);
-                
-                for (let i = 1; i < segments; i++) {
-                    const progress = i / segments;
-                    const x = this.startX + (this.endX - this.startX) * progress + (Math.random() - 0.5) * 40;
-                    const y = this.startY + (this.endY - this.startY) * progress + (Math.random() - 0.5) * 40;
-                    points.push({x, y});
-                }
-                
-                points.push({x: this.endX, y: this.endY});
-                return points;
-            }
-
-            update() {
-                this.life--;
-            }
-
-            draw() {
-                const alpha = this.life / this.maxLife;
-                ctx.save();
-                ctx.globalAlpha = alpha;
-                ctx.strokeStyle = '#ffffff';
-                ctx.lineWidth = this.thickness;
-                ctx.shadowBlur = 15;
-                ctx.shadowColor = '#ffffff';
-                
-                ctx.beginPath();
-                ctx.moveTo(this.points[0].x, this.points[0].y);
-                
-                for (let i = 1; i < this.points.length; i++) {
-                    ctx.lineTo(this.points[i].x, this.points[i].y);
-                }
-                
-                ctx.stroke();
-                ctx.restore();
-            }
-        }
-
-        // White particle system
-        class Particle {
-            constructor(x, y) {
-                this.x = x || Math.random() * width;
-                this.y = y || Math.random() * height;
-                this.vx = (Math.random() - 0.5) * 0.5;
-                this.vy = (Math.random() - 0.5) * 0.5;
-                this.life = Math.random() * 100 + 100;
-                this.maxLife = this.life;
-            }
-
-            update() {
-                this.x += this.vx;
-                this.y += this.vy;
-                this.life--;
-
-                // Mouse attraction
-                const dx = mouse.x - this.x;
-                const dy = mouse.y - this.y;
-                const distance = Math.sqrt(dx * dx + dy * dy);
-                
-                if (distance < 150) {
-                    const force = (150 - distance) / 150;
-                    this.vx += (dx / distance) * force * 0.01;
-                    this.vy += (dy / distance) * force * 0.01;
-                }
-
-                // Boundaries
-                if (this.x < 0 || this.x > width) this.vx *= -1;
-                if (this.y < 0 || this.y > height) this.vy *= -1;
-                
-                this.x = Math.max(0, Math.min(width, this.x));
-                this.y = Math.max(0, Math.min(height, this.y));
-            }
-
-            draw() {
-                const alpha = this.life / this.maxLife;
-                ctx.save();
-                ctx.globalAlpha = alpha * 0.8;
-                ctx.beginPath();
-                ctx.arc(this.x, this.y, 2, 0, Math.PI * 2);
-                ctx.fillStyle = '#ffffff';
-                ctx.fill();
-                ctx.shadowBlur = 10;
-                ctx.shadowColor = '#ffffff';
-                ctx.restore();
-            }
-        }
-
-        // Initialize particles
-        function initParticles() {
-            particles = [];
-            for (let i = 0; i < 80; i++) {
-                particles.push(new Particle());
-            }
-        }
-
-        // Draw white connections between nearby particles
-        function drawConnections() {
-            ctx.save();
-            for (let i = 0; i < particles.length; i++) {
-                for (let j = i + 1; j < particles.length; j++) {
-                    const dx = particles[i].x - particles[j].x;
-                    const dy = particles[i].y - particles[j].y;
-                    const distance = Math.sqrt(dx * dx + dy * dy);
-                    
-                    if (distance < 120) {
-                        const alpha = (120 - distance) / 120;
-                        ctx.globalAlpha = alpha * 0.3;
-                        ctx.beginPath();
-                        ctx.moveTo(particles[i].x, particles[i].y);
-                        ctx.lineTo(particles[j].x, particles[j].y);
-                        ctx.strokeStyle = '#ffffff';
-                        ctx.lineWidth = 0.5;
-                        ctx.stroke();
-                    }
-                }
-            }
-            ctx.restore();
-        }
-
-        // Animation loop
-        function animate() {
-            ctx.clearRect(0, 0, width, height);
-            ctx.fillStyle = 'rgba(0, 0, 0, 0.1)';
-            ctx.fillRect(0, 0, width, height);
-
-            // Update and draw particles
-            particles.forEach((particle, index) => {
-                particle.update();
-                particle.draw();
-                
-                if (particle.life <= 0) {
-                    particles[index] = new Particle();
-                }
-            });
-
-            // Ensure minimum particle count
-            while (particles.length < 60) {
-                particles.push(new Particle());
-            }
-
-            drawConnections();
-
-            // Update and draw lightning bolts
-            lightningBolts.forEach((bolt, index) => {
-                bolt.update();
-                bolt.draw();
-                
-                if (bolt.life <= 0) {
-                    lightningBolts.splice(index, 1);
-                }
-            });
-
-            requestAnimationFrame(animate);
-        }
-
-        // Mouse tracking with lightning generation
-        window.addEventListener('mousemove', (e) => {
-            mouse.x = e.clientX;
-            mouse.y = e.clientY;
-            
-            
-            // Add particles at mouse position
-            if (Math.random() < 0.3) {
-                particles.push(new Particle(e.clientX, e.clientY));
-            }
-
-            // Create lightning to nearby particles
-            if (Math.random() < 0.15) {
-                const nearbyParticle = particles.find(particle => {
-                    const distance = Math.sqrt((particle.x - e.clientX) ** 2 + (particle.y - e.clientY) ** 2);
-                    return distance < 200;
-                });
-                
-                if (nearbyParticle) {
-                    lightningBolts.push(new LightningBolt(e.clientX, e.clientY, nearbyParticle.x, nearbyParticle.y));
-                }
-            }
-        });
-
-        // Click to create lightning burst
-        window.addEventListener('click', (e) => {
-            // Create particle burst
-            for (let i = 0; i < 10; i++) {
-                const angle = (Math.PI * 2 * i) / 10;
-                const particle = new Particle(e.clientX, e.clientY);
-                particle.vx = Math.cos(angle) * 2;
-                particle.vy = Math.sin(angle) * 2;
-                particles.push(particle);
-            }
-
-            // Create lightning bolts
-            for (let i = 0; i < 6; i++) {
-                const angle = (Math.PI * 2 * i) / 6;
-                const distance = Math.random() * 150 + 50;
-                const endX = e.clientX + Math.cos(angle) * distance;
-                const endY = e.clientY + Math.sin(angle) * distance;
-                
-                lightningBolts.push(new LightningBolt(e.clientX, e.clientY, endX, endY));
-            }
-        });
-
         // Smooth scrolling
         document.querySelectorAll('a[href^="#"]').forEach(anchor => {
             anchor.addEventListener('click', function (e) {
@@ -724,108 +428,6 @@
                 }
             });
         });
-
-        // Scroll effects
-        window.addEventListener('scroll', () => {
-            const scrolled = window.pageYOffset;
-            const sections = document.querySelectorAll('.content-box');
-            
-            sections.forEach((section, index) => {
-                const rect = section.getBoundingClientRect();
-                if (rect.top < window.innerHeight && rect.bottom > 0) {
-                    section.style.transform = `translateY(${scrolled * 0.1}px)`;
-                }
-            });
-
-            // Create lightning on scroll
-            if (Math.random() < 0.02) {
-                const randomParticle1 = particles[Math.floor(Math.random() * particles.length)];
-                const randomParticle2 = particles[Math.floor(Math.random() * particles.length)];
-                
-                if (randomParticle1 && randomParticle2) {
-                    lightningBolts.push(new LightningBolt(randomParticle1.x, randomParticle1.y, randomParticle2.x, randomParticle2.y));
-                }
-            }
-        });
-
-        // Interactive effects for project cards
-        document.querySelectorAll('.project-card').forEach(card => {
-            card.addEventListener('mouseenter', () => {
-                const rect = card.getBoundingClientRect();
-                
-                // Create lightning around the card
-                for (let i = 0; i < 3; i++) {
-                    const startX = rect.left + Math.random() * rect.width;
-                    const startY = rect.top + Math.random() * rect.height;
-                    const endX = rect.left + Math.random() * rect.width;
-                    const endY = rect.top + Math.random() * rect.height;
-                    
-                    lightningBolts.push(new LightningBolt(startX, startY, endX, endY));
-                }
-
-                // Create particles around the card
-                for (let i = 0; i < 5; i++) {
-                    const particle = new Particle(
-                        rect.left + Math.random() * rect.width,
-                        rect.top + Math.random() * rect.height
-                    );
-                    particles.push(particle);
-                }
-            });
-        });
-
-        // CV download with lightning explosion (only if element exists)
-        const downloadCV = document.getElementById('downloadCV');
-        if (downloadCV) {
-            downloadCV.addEventListener('click', (e) => {
-            e.preventDefault();
-            
-            const rect = e.target.getBoundingClientRect();
-            const centerX = rect.left + rect.width / 2;
-            const centerY = rect.top + rect.height / 2;
-            
-            // Create massive lightning explosion
-            for (let i = 0; i < 15; i++) {
-                const angle = (Math.PI * 2 * i) / 15;
-                const distance = Math.random() * 200 + 100;
-                const endX = centerX + Math.cos(angle) * distance;
-                const endY = centerY + Math.sin(angle) * distance;
-                
-                lightningBolts.push(new LightningBolt(centerX, centerY, endX, endY));
-            }
-
-            // Create particle explosion
-            for (let i = 0; i < 20; i++) {
-                const angle = (Math.PI * 2 * i) / 20;
-                const particle = new Particle(centerX, centerY);
-                particle.vx = Math.cos(angle) * 3;
-                particle.vy = Math.sin(angle) * 3;
-                particles.push(particle);
-            }
-            
-            alert('⚡ Lightning Resume downloading... Strike! ⚡');
-            });
-        }
-
-
-        // Random ambient lightning
-        setInterval(() => {
-            if (Math.random() < 0.7 && particles.length > 5) {
-                const particle1 = particles[Math.floor(Math.random() * particles.length)];
-                const particle2 = particles[Math.floor(Math.random() * particles.length)];
-                
-                const distance = Math.sqrt((particle1.x - particle2.x) ** 2 + (particle1.y - particle2.y) ** 2);
-                if (distance < 300) {
-                    lightningBolts.push(new LightningBolt(particle1.x, particle1.y, particle2.x, particle2.y));
-                }
-            }
-        }, 2000);
-
-        // Initialize everything
-        window.addEventListener('resize', resizeCanvas);
-        resizeCanvas();
-        initParticles();
-        animate();
     </script>
 </body>
 

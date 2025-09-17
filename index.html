@@ -76,6 +76,10 @@
             padding: 3rem 2rem;
         }
 
+        .section:last-of-type {
+            padding-top: 1rem;
+        }
+
         .section-title {
             font-size: 1.5rem;
             font-weight: 600;
@@ -190,7 +194,6 @@
     <header class="header">
         <div class="header-content">
             <h1>Nathan Kong</h1>
-            <p class="tagline">Bridging software and hardware to create intelligent, high-impact solutions</p>
         </div>
         <div class="header-links">
             <a href="mailto:nak5508@psu.edu">Email</a>
@@ -210,7 +213,7 @@
     <section class="section">
         <h2 class="section-title">About</h2>
         <p class="item-description">
-            I build intelligent systems that transform data into insight, combining engineering precision with creative problem-solving—from optimizing AI kernels to crafting agentic workflows for strategic opportunities.
+            Bridging software and hardware to create intelligent, high-impact solutions. I specialize in transforming complex algorithms from software to hardware—from implementing RAG systems and agentic workflows for enterprise applications, to optimizing Triton kernels for large language models, to converting sophisticated elevator control algorithms from Python to FPGA synthesis. My work spans AI optimization, corporate data analysis, and hardware-software co-design.
         </p>
     </section>
 
@@ -220,7 +223,9 @@
         <div class="timeline">
             <div class="timeline-item">
                 <h3 class="item-title">Software Engineer Intern</h3>
-                <div class="item-subtitle">Hexagon ALI</div>
+                <div class="item-subtitle">
+                    <i class="fas fa-hexagon" style="color: #6b5b73; margin-right: 0.5rem; font-size: 0.9rem;"></i>Hexagon ALI
+                </div>
                 <div class="item-date">May 2025 - August 2025</div>
                 <p class="item-description">
                     Implemented a corporate RAG (Retrieval-Augmented Generation) system integrated into agentic workflows, enabling intelligent document retrieval and context-aware AI responses for enterprise applications.
@@ -257,7 +262,7 @@
             <div class="timeline-item">
                 <h3 class="item-title">Elevator Controller: Python to Vivado HLS Conversion</h3>
                 <p class="item-description">
-                    Complete hardware-software co-design implementing sophisticated elevator control algorithms. Features SCAN optimization with heap-based request management in Python, then demonstrates full conversion to Vivado HLS for FPGA deployment. Achieved 789k requests/second in Python with successful hardware synthesis validation.
+                    The project details converting a Python elevator controller to Vivado High-Level Synthesis (HLS) for FPGA, highlighting differences between software (dynamic structures, unbounded loops) and hardware needs (fixed-size arrays, bounded control flow). Success required replacing Python's heap-based approach with a simplified FIFO array implementation, explicit loop bounds, and fixed-point data types for a functional HLS C++ design.
                 </p>
                 <div class="tech-tags">
                     <span class="tech-tag">Python</span>

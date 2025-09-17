@@ -106,58 +106,12 @@
         }
 
 
-        /* Interactive Elements */
+        /* Simplified Sections */
         .section {
             min-height: auto;
-            padding: 1rem 2rem;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            position: relative;
-        }
-
-        .content-box {
-            max-width: 1000px;
-            background: rgba(255, 255, 255, 0.03);
-            backdrop-filter: blur(20px);
-            border: 1px solid rgba(255, 255, 255, 0.2);
-            border-radius: 20px;
-            padding: 1.5rem;
-            transition: all 0.3s ease;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .content-box::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: -100%;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.1), transparent);
-            transition: left 0.8s;
-        }
-
-        .content-box:hover::before {
-            left: 100%;
-        }
-
-        .content-box::after {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            height: 2px;
-            background: linear-gradient(90deg, transparent, #ffffff, transparent);
-        }
-
-
-        .content-box:hover {
-            border-color: rgba(255, 255, 255, 0.5);
-            box-shadow: 0 20px 50px rgba(255, 255, 255, 0.1);
-            transform: translateY(-10px);
+            padding: 3rem 2rem;
+            max-width: 800px;
+            margin: 0 auto;
         }
 
         .section-title {
@@ -169,134 +123,104 @@
             text-shadow: 0 0 15px rgba(255, 255, 255, 0.5);
         }
 
-        /* Projects Grid */
-        .projects-grid {
-            display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            gap: 2rem;
-            margin-top: 2rem;
-            max-width: 900px;
-            margin-left: auto;
-            margin-right: auto;
-        }
-
-        .project-card {
-            background: rgba(255, 255, 255, 0.02);
-            border: 1px solid rgba(255, 255, 255, 0.3);
-            border-radius: 15px;
-            padding: 1.5rem;
-            transition: all 0.3s ease;
+        /* Timeline Layout */
+        .timeline {
+            max-width: 800px;
+            margin: 0 auto;
             position: relative;
-            overflow: hidden;
-            aspect-ratio: 1;
-            display: flex;
-            flex-direction: column;
-            justify-content: space-between;
         }
 
-        .project-card::after {
+        .timeline-item {
+            margin-bottom: 3rem;
+            padding-left: 2rem;
+            position: relative;
+            border-left: 2px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .timeline-item::before {
             content: '';
             position: absolute;
+            left: -6px;
             top: 0;
-            left: 0;
-            right: 0;
-            height: 3px;
-            background: linear-gradient(90deg, #ffffff, #aaaaaa, #ffffff);
-            transform: scaleX(0);
-            transition: transform 0.3s ease;
+            width: 10px;
+            height: 10px;
+            background: #ffffff;
+            border-radius: 50%;
+            box-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
         }
 
-        .project-card:hover::after {
-            transform: scaleX(1);
-        }
-
-        .project-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 15px 40px rgba(255, 255, 255, 0.1);
-            border-color: #ffffff;
-        }
-
-        .project-title {
+        .timeline-title {
             color: #ffffff;
-            font-size: 1.5rem;
-            font-weight: 300;
-            margin-bottom: 1rem;
+            font-size: 1.3rem;
+            font-weight: 400;
+            margin-bottom: 0.5rem;
         }
 
-        .project-description {
+        .timeline-description {
             color: #cccccc;
-            margin-bottom: 1.5rem;
+            line-height: 1.6;
+            margin-bottom: 1rem;
         }
 
         .tech-tags {
             display: flex;
-            gap: 0.5rem;
+            gap: 1rem;
             flex-wrap: wrap;
         }
 
         .tech-tag {
-            background: rgba(255, 255, 255, 0.1);
-            border: 1px solid rgba(255, 255, 255, 0.3);
-            color: #ffffff;
-            padding: 0.3rem 0.8rem;
-            border-radius: 15px;
-            font-size: 0.8rem;
-            transition: all 0.3s ease;
+            color: #aaaaaa;
+            font-size: 0.9rem;
+            font-weight: 300;
+            position: relative;
         }
 
-        .tech-tag:hover {
-            background: #ffffff;
-            color: #000000;
-            box-shadow: 0 0 20px rgba(255, 255, 255, 0.5);
+        .tech-tag::after {
+            content: '•';
+            margin-left: 1rem;
+            color: rgba(255, 255, 255, 0.3);
         }
 
-        /* Experience Section */
-        .experience-item {
-            background: rgba(255, 255, 255, 0.03);
-            border: 1px solid rgba(255, 255, 255, 0.2);
-            border-radius: 15px;
-            padding: 1.5rem;
+        .tech-tag:last-child::after {
+            display: none;
+        }
+
+        /* Simplified Content Sections */
+        .content-section {
             max-width: 800px;
             margin: 0 auto;
-            transition: all 0.3s ease;
+            text-align: left;
         }
 
-        .experience-item:hover {
-            border-color: rgba(255, 255, 255, 0.4);
-            box-shadow: 0 10px 30px rgba(255, 255, 255, 0.1);
-            transform: translateY(-5px);
+        .content-header {
+            margin-bottom: 0.5rem;
         }
 
-        .experience-header {
-            display: flex;
-            flex-direction: column;
-            gap: 0.5rem;
-            margin-bottom: 1rem;
-        }
-
-        .experience-title {
+        .content-title {
             color: #ffffff;
             font-size: 1.3rem;
             font-weight: 400;
             margin: 0;
         }
 
-        .experience-company {
+        .content-subtitle {
             color: #aaaaaa;
-            font-size: 1.1rem;
+            font-size: 1rem;
             font-weight: 300;
+            margin-top: 0.2rem;
         }
 
-        .experience-date {
+        .content-date {
             color: #888888;
             font-size: 0.9rem;
             font-style: italic;
+            margin-top: 0.2rem;
         }
 
-        .experience-description {
+        .content-description {
             color: #cccccc;
             line-height: 1.6;
-            margin-bottom: 1rem;
+            margin: 1rem 0;
         }
 
         /* Contact Section */
@@ -400,15 +324,15 @@
 
     <!-- Experience Section -->
     <section id="experience" class="section">
-        <div>
-            <h2 class="section-title">Work Experience</h2>
-            <div class="experience-item">
-                <div class="experience-header">
-                    <h3 class="experience-title">Software Engineer Intern</h3>
-                    <span class="experience-company">Hexagon ALI</span>
-                    <span class="experience-date">May 2025 - August 2025</span>
+        <h2 class="section-title">Work Experience</h2>
+        <div class="timeline">
+            <div class="timeline-item">
+                <div class="content-header">
+                    <h3 class="content-title">Software Engineer Intern</h3>
+                    <div class="content-subtitle">Hexagon ALI</div>
+                    <div class="content-date">May 2025 - August 2025</div>
                 </div>
-                <p class="experience-description">
+                <p class="content-description">
                     Implemented a corporate RAG (Retrieval-Augmented Generation) system integrated into agentic workflows, enabling intelligent document retrieval and context-aware AI responses for enterprise applications.
                 </p>
                 <div class="tech-tags">
@@ -423,13 +347,15 @@
 
     <!-- Projects Section -->
     <section id="projects" class="section">
-    <div>
         <h2 class="section-title">Featured Work</h2>
-        <div class="projects-grid">
+        <div class="timeline">
 
-            <div class="project-card">
-                <h3 class="project-title">Triton Kernel FlashAttention Optimization (Independent Research)</h3>
-                <p class="project-description">
+            <div class="timeline-item">
+                <div class="content-header">
+                    <h3 class="content-title">Triton Kernel FlashAttention Optimization</h3>
+                    <div class="content-subtitle">Independent Research</div>
+                </div>
+                <p class="content-description">
                     Explored memory-bounded attention scaling in large language models, demonstrating how FlashAttention enables sequences up to 65k tokens on GPT-NeoX-20B across 8× A100 GPUs. Extended research into Triton kernel optimization with persistent kernels, warp specialization, and block tiling, benchmarking results against FlashAttention-2 to evaluate long-context inference performance.
                 </p>
                 <div class="tech-tags">
@@ -440,9 +366,11 @@
                 </div>
             </div>
 
-            <div class="project-card">
-                <h3 class="project-title">Elevator Controller: Python to Vivado HLS Conversion</h3>
-                <p class="project-description">
+            <div class="timeline-item">
+                <div class="content-header">
+                    <h3 class="content-title">Elevator Controller: Python to Vivado HLS Conversion</h3>
+                </div>
+                <p class="content-description">
                     Complete hardware-software co-design implementing sophisticated elevator control algorithms. Features SCAN optimization with heap-based request management in Python, then demonstrates full conversion to Vivado HLS for FPGA deployment. Achieved 789k requests/second in Python with successful hardware synthesis validation.
                 </p>
                 <div class="tech-tags">
@@ -454,9 +382,11 @@
                 </div>
             </div>
 
-            <div class="project-card">
-                <h3 class="project-title">Corporate Disclosure Insight System</h3>
-                <p class="project-description">
+            <div class="timeline-item">
+                <div class="content-header">
+                    <h3 class="content-title">Corporate Disclosure Insight System</h3>
+                </div>
+                <p class="content-description">
                     Offline workflow retrieving SEC EDGAR 10-K filings, converting to JSONL for analysis. Uses local LLM inference to surface investment signals, reducing manual review by ~80%.
                 </p>
                 <div class="tech-tags">
@@ -467,9 +397,11 @@
                 </div>
             </div>
 
-            <div class="project-card">
-                <h3 class="project-title">Customization Query System for Real Estate Properties</h3>
-                <p class="project-description">
+            <div class="timeline-item">
+                <div class="content-header">
+                    <h3 class="content-title">Real Estate Property Ranking Platform</h3>
+                </div>
+                <p class="content-description">
                     Property ranking platform with cost function-based scoring integrating real estate APIs and statistical modeling. Evaluates ROI potential using location amenities, safety proxies, and pricing trends.
                 </p>
                 <div class="tech-tags">
@@ -481,8 +413,7 @@
             </div>
 
         </div>
-    </div>
-</section>
+    </section>
 
 
     <!-- Contact Section -->

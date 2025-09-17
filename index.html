@@ -250,6 +250,55 @@
             box-shadow: 0 0 20px rgba(255, 255, 255, 0.5);
         }
 
+        /* Experience Section */
+        .experience-item {
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 15px;
+            padding: 1.5rem;
+            max-width: 800px;
+            margin: 0 auto;
+            transition: all 0.3s ease;
+        }
+
+        .experience-item:hover {
+            border-color: rgba(255, 255, 255, 0.4);
+            box-shadow: 0 10px 30px rgba(255, 255, 255, 0.1);
+            transform: translateY(-5px);
+        }
+
+        .experience-header {
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .experience-title {
+            color: #ffffff;
+            font-size: 1.3rem;
+            font-weight: 400;
+            margin: 0;
+        }
+
+        .experience-company {
+            color: #aaaaaa;
+            font-size: 1.1rem;
+            font-weight: 300;
+        }
+
+        .experience-date {
+            color: #888888;
+            font-size: 0.9rem;
+            font-style: italic;
+        }
+
+        .experience-description {
+            color: #cccccc;
+            line-height: 1.6;
+            margin-bottom: 1rem;
+        }
+
         /* Contact Section */
         .contact-grid {
             display: flex;
@@ -346,6 +395,29 @@
                 combining engineering precision with creative problem-solving—<br>
                 from optimizing AI kernels to crafting agentic workflows for strategic opportunities.
             </p>
+        </div>
+    </section>
+
+    <!-- Experience Section -->
+    <section id="experience" class="section">
+        <div>
+            <h2 class="section-title">Work Experience</h2>
+            <div class="experience-item">
+                <div class="experience-header">
+                    <h3 class="experience-title">Software Engineer Intern</h3>
+                    <span class="experience-company">Hexagon ALI</span>
+                    <span class="experience-date">May 2025 - August 2025</span>
+                </div>
+                <p class="experience-description">
+                    Implemented a corporate RAG (Retrieval-Augmented Generation) system integrated into agentic workflows, enabling intelligent document retrieval and context-aware AI responses for enterprise applications.
+                </p>
+                <div class="tech-tags">
+                    <span class="tech-tag">RAG</span>
+                    <span class="tech-tag">Agentic Workflows</span>
+                    <span class="tech-tag">Python</span>
+                    <span class="tech-tag">LLM Integration</span>
+                </div>
+            </div>
         </div>
     </section>
 
